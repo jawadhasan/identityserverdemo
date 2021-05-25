@@ -38,6 +38,7 @@ namespace IDPDemoApp.Web
                     options.EmitStaticAudienceClaim = true;
                 })
                 .AddDeveloperSigningCredential()        //This is for dev only scenarios when you don’t have a certificate to use.
+                .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients);
         }
