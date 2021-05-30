@@ -39,8 +39,10 @@ namespace IDPDemoApp.Web
                 })
                 .AddDeveloperSigningCredential()        //This is for dev only scenarios when you don’t have a certificate to use.
                 .AddInMemoryIdentityResources(Config.IdentityResources)
+                .AddInMemoryApiResources(Config.ApiResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddInMemoryClients(Config.Clients);
+                .AddInMemoryClients(Config.Clients)
+                .AddTestUsers(Config.TestUsers);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
