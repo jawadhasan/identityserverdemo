@@ -63,9 +63,26 @@ namespace IDPDemoApp.Web
                     ClientId = "ropacc",
                     ClientSecrets = new [] { new Secret("secret".Sha512()) },
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
-                    AllowedScopes = { IdentityServerConstants.StandardScopes.OpenId }
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId, 
+                        "api1"
+                    }
                 },
+               
+                //ROPC client - similar to ROPACC
+                new Client
+                {
+                    ClientId  = "ropcClient",
 
+                    ClientSecrets = new [] { new Secret("secret".Sha512()) },
+
+                    //means, we trade username/password for given-user for access//use is not recommended
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+
+                    // scopes that client has access to
+                    AllowedScopes = { "api1" }
+                },
 
                 //mvc client (confidential client)
                 new Client
@@ -98,20 +115,6 @@ namespace IDPDemoApp.Web
                     
                 },
                 
-                //ROPC client - similar to ROPACC
-                new Client
-                {
-                    ClientId  = "ropcClient",
-                
-                    ClientSecrets = new [] { new Secret("secret".Sha512()) },
-
-                    //means, we trade username/password for given-user for access//use is not recommended
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-
-                    // scopes that client has access to
-                    AllowedScopes = { "api1" }
-                },
-
                 //angular client
                 new Client
                 {
