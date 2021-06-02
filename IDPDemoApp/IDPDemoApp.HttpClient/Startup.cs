@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace IDPDemoApp.Web
+namespace IDPDemoApp.HttpClient
 {
     public class Startup
     {
@@ -27,22 +27,6 @@ namespace IDPDemoApp.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
-            var builder = services.AddIdentityServer(options =>
-                {
-                    options.Events.RaiseErrorEvents = true;
-                    options.Events.RaiseInformationEvents = true;
-                    options.Events.RaiseFailureEvents = true;
-                    options.Events.RaiseSuccessEvents = true;
-                    options.Endpoints.EnableTokenEndpoint = true;
-                    options.EmitStaticAudienceClaim = true;
-                })
-                .AddDeveloperSigningCredential()        //This is for dev only scenarios when you don’t have a certificate to use.
-                .AddInMemoryIdentityResources(Config.IdentityResources)
-                .AddInMemoryApiResources(Config.ApiResources)
-                .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddInMemoryClients(Config.Clients)
-                .AddTestUsers(Config.TestUsers);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -54,9 +38,9 @@ namespace IDPDemoApp.Web
             }
 
             app.UseHttpsRedirection();
+
             app.UseRouting();
 
-            app.UseIdentityServer();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -64,7 +48,7 @@ namespace IDPDemoApp.Web
                 endpoints.MapControllers();
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Running IdentityServer4 ASP.NET Core");
+                    await context.Response.WriteAsync("Running IDPDemoApp.HttpClient");
                 });
             });
         }

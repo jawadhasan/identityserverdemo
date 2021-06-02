@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDPDemoApp.Web", "IDPDemoAp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDPDemoApp.Api", "IDPDemoApp.Api\IDPDemoApp.Api.csproj", "{00FBF0D8-6E46-4043-B085-0E4B782AC4C0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IDPDemoApp.HttpClient", "IDPDemoApp.HttpClient\IDPDemoApp.HttpClient.csproj", "{57F3F30E-6FE4-4A06-85C0-03B95E6DF959}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{00FBF0D8-6E46-4043-B085-0E4B782AC4C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00FBF0D8-6E46-4043-B085-0E4B782AC4C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00FBF0D8-6E46-4043-B085-0E4B782AC4C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57F3F30E-6FE4-4A06-85C0-03B95E6DF959}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57F3F30E-6FE4-4A06-85C0-03B95E6DF959}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57F3F30E-6FE4-4A06-85C0-03B95E6DF959}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57F3F30E-6FE4-4A06-85C0-03B95E6DF959}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
