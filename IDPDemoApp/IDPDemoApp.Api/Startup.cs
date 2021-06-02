@@ -11,8 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
 
-namespace IDPDemoApp.Web
+namespace IDPDemoApp.Api
 {
     public class Startup
     {
@@ -28,21 +30,19 @@ namespace IDPDemoApp.Web
         {
             services.AddControllers();
 
-            var builder = services.AddIdentityServer(options =>
+            services.AddAuthorization();
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
                 {
-                    options.Events.RaiseErrorEvents = true;
-                    options.Events.RaiseInformationEvents = true;
-                    options.Events.RaiseFailureEvents = true;
-                    options.Events.RaiseSuccessEvents = true;
-                    options.Endpoints.EnableTokenEndpoint = true;
-                    options.EmitStaticAudienceClaim = true;
-                })
-                .AddDeveloperSigningCredential()        //This is for dev only scenarios when you don’t have a certificate to use.
-                .AddInMemoryIdentityResources(Config.IdentityResources)
-                .AddInMemoryApiResources(Config.ApiResources)
-                .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddInMemoryClients(Config.Clients)
-                .AddTestUsers(Config.TestUsers);
+                    options.IncludeErrorDetails = true;
+                    options.Authority = "https://localhost:5001";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false,
+                        ValidIssuer = "https://localhost:5001",
+                    };
+                });
+            IdentityModelEventSource.ShowPII = true;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -55,8 +55,8 @@ namespace IDPDemoApp.Web
 
             app.UseHttpsRedirection();
             app.UseRouting();
-
-            app.UseIdentityServer();
+            
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -64,9 +64,12 @@ namespace IDPDemoApp.Web
                 endpoints.MapControllers();
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Welcome to running IdentityServer4 ASP.NET Core");
+                    await context.Response.WriteAsync("Welcome to running ASP.NET Core on AWS Lambda");
                 });
             });
+
+
+
         }
     }
 }
