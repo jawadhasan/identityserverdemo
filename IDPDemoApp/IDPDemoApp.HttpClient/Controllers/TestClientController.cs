@@ -99,18 +99,69 @@ namespace IDPDemoApp.HttpClient.Controllers
                return BadRequest(tokenResponse.Error);
            }
 
-           // call resource api
-           var client = new System.Net.Http.HttpClient();
-           client.SetBearerToken(tokenResponse.AccessToken);
-           var response = await client.GetAsync("https://localhost:44357/api/identity");
-           if (!response.IsSuccessStatusCode)
-           {
-               Console.WriteLine(response.StatusCode);
-               return BadRequest(response.StatusCode.ToString());
-           }
+            // call resource api
+            var client = new System.Net.Http.HttpClient();
+            client.SetBearerToken(tokenResponse.AccessToken);
+            var response = await client.GetAsync("https://localhost:44357/api/identity");
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine(response.StatusCode);
+                return BadRequest(response.StatusCode.ToString());
+            }
+            var jsonString = await response.Content.ReadAsStringAsync();
+            return Ok(jsonString);
+        }
 
-           var jsonString = await response.Content.ReadAsStringAsync();
-           return Ok(jsonString);
+
+        [HttpGet("getUserInfo")]
+        public async Task<dynamic> GetUserInfo()
+        {
+
+            var httpClient = new System.Net.Http.HttpClient();
+
+            // discover endpoints from metadata
+            var discoveryDocument = await httpClient.GetDiscoveryDocumentAsync("https://localhost:5001");
+
+            if (discoveryDocument.IsError)
+            {
+                Console.WriteLine(discoveryDocument.Error);
+                return BadRequest(discoveryDocument.Error);
+            }
+
+            //Make Token Request
+            var passwordTokenRequest = new PasswordTokenRequest
+            {
+                Address = discoveryDocument.TokenEndpoint,
+                ClientId = "ropacc",
+                ClientSecret = "secret",
+                GrantType = "password",
+                Scope = "openid profile api1 role email", //notice scopes requested
+                UserName = "Jon",
+                Password = "jon123"
+            };
+
+            var tokenResponse = await httpClient.RequestPasswordTokenAsync(passwordTokenRequest);
+
+            if (tokenResponse.IsError)
+            {
+                Console.WriteLine(tokenResponse.Error);
+                return BadRequest(tokenResponse.Error);
+            }
+
+            //call userinfo-endpoint
+            var userInfoClient = new System.Net.Http.HttpClient();
+
+            //Make UserInfoRequest
+            var userInfoRequest = new UserInfoRequest
+            {
+                Address = discoveryDocument.UserInfoEndpoint,
+                Token = tokenResponse.AccessToken
+            };
+            var userInfoResponse = await userInfoClient.GetUserInfoAsync(userInfoRequest);
+            var jsonString = userInfoResponse.Claims.Select(claim => new { claim.Type, claim.Value });
+
+
+            return Ok(jsonString);
         }
 
 

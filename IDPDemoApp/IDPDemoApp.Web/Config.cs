@@ -13,12 +13,29 @@ namespace IDPDemoApp.Web
             new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new IdentityResources.Email(),
+                new IdentityResource
+                {
+                    Name = "role",
+                    UserClaims = new List<string> {"role"}
+                }
             };
         public static IEnumerable<ApiResource> ApiResources => 
             new List<ApiResource>
         {
-
+            new ApiResource{
+                Name = "customAPI",
+                DisplayName = "Custom API",
+                Description = "Custom API Access",
+                UserClaims = new List<string> {"role"},
+                ApiSecrets = new List<Secret> {new Secret("scopeSecret".Sha256())},
+                //Scopes = new List<Scope>
+                //{
+                //    new Scope("customAPI.read"),
+                //    new Scope("customAPI.write")
+                //}
+            }
         };
         public static IEnumerable<ApiScope> ApiScopes =>
             new List<ApiScope>
@@ -29,8 +46,7 @@ namespace IDPDemoApp.Web
                 new ApiScope("api1", "My API"),
                 new ApiScope("companyApi", "Company Api"),
                 new ApiScope("api1.read", "Read only access"),
-                new ApiScope("api1.emailNotify", "email subscription"),
-                new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
+                new ApiScope("api1.emailNotify", "email subscription")
             };
         public static IEnumerable<Client> Clients =>
             new List<Client>
@@ -61,12 +77,16 @@ namespace IDPDemoApp.Web
                 new Client
                 {
                     ClientId = "ropacc",
+                    ClientName = "Example Client Credentials Client Application",
                     ClientSecrets = new [] { new Secret("secret".Sha512()) },
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
                     AllowedScopes =
                     {
-                        IdentityServerConstants.StandardScopes.OpenId, 
-                        "api1"
+                       IdentityServerConstants.StandardScopes.OpenId, 
+                       IdentityServerConstants.StandardScopes.Profile,
+                       "api1",
+                       "role",
+                       IdentityServerConstants.StandardScopes.Email
                     }
                 },
                
