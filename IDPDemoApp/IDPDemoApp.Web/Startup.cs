@@ -43,6 +43,8 @@ namespace IDPDemoApp.Web
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients)
                 .AddTestUsers(Config.TestUsers);
+
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -54,6 +56,8 @@ namespace IDPDemoApp.Web
             }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseDefaultFiles();
             app.UseRouting();
 
             app.UseIdentityServer();
@@ -61,11 +65,13 @@ namespace IDPDemoApp.Web
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Running IdentityServer4 ASP.NET Core");
-                });
+                endpoints.MapDefaultControllerRoute();
+
+                //endpoints.MapControllers();
+                //endpoints.MapGet("/", async context =>
+                //{
+                //    await context.Response.WriteAsync("Running IdentityServer4 ASP.NET Core");
+                //});
             });
         }
     }
