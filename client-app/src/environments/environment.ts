@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiBaseURI: 'https://localhost:44357',
+  authEndpoint: 'https://localhost:5001',
+  clientId: 'angular-client',
+  dummyClientSecret: 'secret',
+  scope: 'openid profile api1 roles offline_access',
 };
 
 /*

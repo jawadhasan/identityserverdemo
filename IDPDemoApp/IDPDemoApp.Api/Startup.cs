@@ -37,7 +37,7 @@ namespace IDPDemoApp.Api
             services.Add(new ServiceDescriptor(typeof(ProductsRepository), productRepo));
 
 
-
+            services.AddCors();
             services.AddControllers();
 
             services.AddAuthorization();
@@ -65,7 +65,13 @@ namespace IDPDemoApp.Api
 
             app.UseHttpsRedirection();
             app.UseRouting();
-            
+
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
             app.UseAuthentication();
             app.UseAuthorization();
 

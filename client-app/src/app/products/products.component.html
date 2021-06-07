@@ -1,0 +1,29 @@
+<h2>Products List</h2>
+
+<button  class="btn btn-success pull-right disabled"><i class="fa fa-plus"></i> Add Product</button>
+<br />
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Serial No</th>
+            <th>Created At</th>
+            <th>Actions</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of products">
+            <td>{{product.id}}</td>
+            <td>{{product.name}}</td>
+            <td>{{product.serialno}}</td>
+            <td>{{product.createdat}}</td>
+            <td>
+                <button  class="btn btn-secondary" disabled>Edit</button>
+                <button  class="btn btn-danger" disabled (click)="delete(product.id)">Delete</button>
+            </td>
+
+        </tr>
+    </tbody>
+</table>
