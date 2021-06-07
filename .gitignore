@@ -35,7 +35,7 @@ node_modules
 .vs/
 /wwwroot/dist/
 /ClientApp/dist/
-
+dist
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
