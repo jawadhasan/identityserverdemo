@@ -86,7 +86,7 @@ namespace IDPDemoApp.HttpClient.Controllers
                 ClientId = "ropacc",
                 ClientSecret = "secret",
                 GrantType = "password",//GrantTypes.ResourceOwnerPassword,
-                Scope = "api1",
+                Scope = "openid profile api1",
                 UserName = "Jon",
                 Password = "jon123"
             };

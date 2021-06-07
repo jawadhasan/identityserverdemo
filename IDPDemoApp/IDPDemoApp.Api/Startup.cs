@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IDPDemoApp.Api.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -28,6 +29,15 @@ namespace IDPDemoApp.Api
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
+
+            var connString = Configuration.GetSection("DefaultConnection").Value;
+            var authority = Configuration.GetSection("Authority");
+
+            var productRepo = new ProductsRepository(connString);
+            services.Add(new ServiceDescriptor(typeof(ProductsRepository), productRepo));
+
+
+
             services.AddControllers();
 
             services.AddAuthorization();

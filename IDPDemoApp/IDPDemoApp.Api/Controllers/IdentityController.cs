@@ -16,8 +16,10 @@ namespace IDPDemoApp.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var claims = from c in User.Claims select new {c.Type, c.Value};
-            return Ok(claims);
+            //todo: microsoft ns
+            var claims1 =HttpContext.User.Claims.Select(claim => new {claim.Type, claim.Value}).ToList();
+            var claims2 = from c in User.Claims select new {c.Type, c.Value};
+            return Ok(claims1);
         }
     }
 }
