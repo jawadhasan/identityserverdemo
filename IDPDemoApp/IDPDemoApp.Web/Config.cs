@@ -21,22 +21,34 @@ namespace IDPDemoApp.Web
                     UserClaims = new List<string> {"role"}
                 }
             };
-        public static IEnumerable<ApiResource> ApiResources => 
+
+        public static IEnumerable<ApiResource> ApiResources =>
             new List<ApiResource>
-        {
-            new ApiResource{
-                Name = "customAPI",
-                DisplayName = "Custom API",
-                Description = "Custom API Access",
-                UserClaims = new List<string> {"role"},
-                ApiSecrets = new List<Secret> {new Secret("scopeSecret".Sha256())},
-                //Scopes = new List<Scope>
-                //{
-                //    new Scope("customAPI.read"),
-                //    new Scope("customAPI.write")
-                //}
-            }
-        };
+            {
+
+                new ApiResource("api1", "My API")
+                {
+                    Scopes = { "api1" }
+                },
+
+                new ApiResource{
+                    Name = "customAPI",
+                    DisplayName = "Custom API",
+                    Description = "Custom API Access",
+                    UserClaims = new List<string> {"role"},
+                    ApiSecrets = new List<Secret> {new Secret("scopeSecret".Sha256())},
+                    //Scopes = new List<Scope>
+                    //{
+                    //    new Scope("customAPI.read"),
+                    //    new Scope("customAPI.write")
+                    //}
+                }
+
+            };
+    
+
+   
+       
         public static IEnumerable<ApiScope> ApiScopes =>
             new List<ApiScope>
             {
@@ -103,6 +115,9 @@ namespace IDPDemoApp.Web
                     // scopes that client has access to
                     AllowedScopes = { "api1" }
                 },
+
+                
+
 
                 //mvc client (confidential client)
                 new Client
