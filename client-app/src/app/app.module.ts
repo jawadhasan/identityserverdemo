@@ -5,11 +5,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ProductsComponent } from './products/products.component';
+import { SigninCallbackComponent } from './signin-callback.component';
+import { SignoutCallbackComponent } from './signout-callback.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProductsComponent
+    ProductsComponent,
+    SigninCallbackComponent,
+    SignoutCallbackComponent
   ],
   imports: [
     BrowserModule,

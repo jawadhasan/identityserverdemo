@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProductsComponent } from './products/products.component';
-// import { TokenComponent } from './token/token.component';
+import { SigninCallbackComponent } from './signin-callback.component';
+
 
 
 const routes: Routes = [ 
   { path: 'products', component: ProductsComponent },
-  // { path: 'token', component: TokenComponent },
+  { path: 'signin-callback', component: SigninCallbackComponent },
+  
 ];
 
 @NgModule({

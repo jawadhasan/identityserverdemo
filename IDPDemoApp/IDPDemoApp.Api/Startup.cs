@@ -46,7 +46,7 @@ namespace IDPDemoApp.Api
                 {
                     options.IncludeErrorDetails = true;
                     options.Authority = "https://localhost:5001";
-                    options.Audience = "api1";
+                    options.Audience = "api1";// The API resource scope issued in authorization server
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateAudience = false,

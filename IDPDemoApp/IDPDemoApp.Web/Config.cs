@@ -64,6 +64,8 @@ namespace IDPDemoApp.Web
             new List<Client>
             {
 
+
+
                 //m2m client (no user)
                 new Client
                 {
@@ -149,6 +151,7 @@ namespace IDPDemoApp.Web
 
                     
                 },
+
                 
                 //angular client
                 new Client
