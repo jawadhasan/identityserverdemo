@@ -33,39 +33,45 @@ export class AuthService {
     }
 
 
-    login(){
+    isLoggedIn(): Promise<Boolean> {
+        return this._userManager
+            .getUser()
+            .then(user => {
+                const userCurrent = !!user && !user.expired; //if not NULL and not Expired
+
+                if (this._user != user) {
+                    this._loginChangedSubject.next(userCurrent);
+                }
+
+                this._user = user;
+                return userCurrent;
+            });
+    }
+
+    login() {
         return this._userManager.signinRedirect();
     }
 
-    logout(){
-        return this._userManager.signoutRedirect();
-    }
 
-    isLoggedIn():Promise<Boolean>{
-        return this._userManager
-        .getUser()
-        .then(user=>{
-            const userCurrent = !!user && !user.expired; //if not NULL and not Expired
-
-            if(this._user != user){
-                this._loginChangedSubject.next(userCurrent);
-            }
-
-            this._user = user;
-            return userCurrent;
-        });
-    }
-
-
-    
-    completeLogin(){
-        return this._userManager.signinRedirectCallback().then(user=>{
+    completeLogin() {
+        return this._userManager.signinRedirectCallback().then(user => {
             this._user = user;
             this._loginChangedSubject.next(!!user && !user.expired);
             return user;
         })
     }
 
+
+    logout() {
+        return this._userManager.signoutRedirect();
+    }
+
+    //invoking this method will clear the state of UserManager and cached user object
+    completeLogout() {
+        this._user = null;
+        return this._userManager.signoutRedirectCallback();
+    };
 }
 
-  
+
+

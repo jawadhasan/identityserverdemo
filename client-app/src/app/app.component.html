@@ -5,16 +5,18 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
+
+      <li class="nav-item">       
+        <a *ngIf="isLoggedIn" class="nav-link" routerLink="/products">Products</a>
+      </li>
+
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="#">About <span class="sr-only">(current)</span></a>
       </li>
+     
       <li class="nav-item">
-        <!-- <a class="nav-link" routerLink="/users">Users</a> -->
-        <a class="nav-link" routerLink="/products">Products</a>
-      </li>
-      <li class="nav-item">
-        <button *ngIf="!isLoggedIn" (click)="login()">Login</button>
-        <button *ngIf="isLoggedIn" (click)="logout()">Logout</button>
+        <button class="pull-right" *ngIf="!isLoggedIn" (click)="login()">Login</button>
+        <button class="pull right" *ngIf="isLoggedIn" (click)="logout()">Logout</button>
       </li>
      
      

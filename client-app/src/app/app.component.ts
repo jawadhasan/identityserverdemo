@@ -33,6 +33,6 @@ export class AppComponent {
   }
 
   logout(){
-    //todo:
+    this._authService.logout();
   }
 }
