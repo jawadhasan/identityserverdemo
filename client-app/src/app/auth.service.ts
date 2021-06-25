@@ -71,6 +71,16 @@ export class AuthService {
         this._user = null;
         return this._userManager.signoutRedirectCallback();
     };
+
+    getAccessToken(){
+        return this._userManager.getUser().then(user=>{
+            if(!!user && !user.expired){
+                return user.access_token;
+            }else{
+                return null;
+            }
+        })
+    }
 }
 
 

@@ -1,12 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ProductsComponent } from './products/products.component';
 import { SigninCallbackComponent } from './signin-callback.component';
 import { SignoutCallbackComponent } from './signout-callback.component';
+import { AuthInterceptorService } from './auth-intercepter.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,9 @@ import { SignoutCallbackComponent } from './signout-callback.component';
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
